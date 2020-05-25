@@ -1,0 +1,27 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1590134463359.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3414555488",
+    "id" : "A165BAD1",
+    "lastKnownWriteTime" : 1590351007,
+    "last_content_update" : 1590351007794,
+    "path" : "~/ProjektCovid/ProjektCovid.Rmd",
+    "project_path" : "ProjektCovid.Rmd",
+    "properties" : {
+        "cursorPosition" : "196,0",
+        "last_setup_crc32" : "A78A648014f8a502",
+        "scrollLine" : "181",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

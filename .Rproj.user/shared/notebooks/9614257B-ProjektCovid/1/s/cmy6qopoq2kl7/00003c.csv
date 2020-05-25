@@ -1,0 +1,6 @@
+"0",""
+"0","valueBox("
+"0","  value = paste(format(sum(df$confirmed), big.mark = "",""), """", sep = "" ""),"
+"0","  caption = ""Liczba potwierdzonych przypadków zarażeń"","
+"0","  color = confirmed_color,"
+"0",")"
