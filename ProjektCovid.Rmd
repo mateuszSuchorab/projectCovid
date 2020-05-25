@@ -194,4 +194,131 @@ plotly::plot_ly(data = df_daily) %>%
   )
 ```
 
+ 
+Histogram
+=======================================================================
 
+
+Column {data-width=400}
+-------------------------------------
+ 
+ 
+### **Liczba potwierdzonych przypadków zachorowań i zgonów w wybranych krajach**
+
+```{r daily_summary}
+df_EU <- coronavirus %>%
+  dplyr::filter(country == "Poland" |
+    country == "Sweden" |
+    country == "Germany" |
+    country == "Italy" |
+    country == "US") %>%
+  dplyr::group_by(country, type) %>%
+  dplyr::summarise(total = sum(cases)) %>%
+  tidyr::pivot_wider(
+    names_from = type,
+    values_from = total
+  ) %>%
+  dplyr::mutate(unrecovered = confirmed - ifelse(is.na(death), 0, death)) %>%
+  dplyr::arrange(confirmed) %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(country = trimws(country)) %>%
+  dplyr::mutate(country = factor(country, levels = country))
+
+plotly::plot_ly(
+  data = df_EU,
+  x = ~country,
+  y = ~ confirmed,
+  type = "bar",
+  name = "Zachorowania",
+  marker = list(color = active_color)
+) %>%
+  plotly::add_trace(
+    y = ~death,
+    name = "Zgony",
+    marker = list(color = death_color)
+  ) %>%
+  plotly::layout(
+    barmode = "stack",
+    yaxis = list(title = "Liczba przypadków"),
+    xaxis = list(title = "Państwo"),
+    hovermode = "compare",
+    margin = list(
+      b = 10,
+      t = 10,
+      pad = 2
+    )
+  )
+```
+
+
+
+Wykres
+=======================================================================
+
+
+Column {data-width=400}
+-------------------------------------
+
+
+### **Ilość osób zarażonych w innych krajach**
+    
+```{r}
+daily_confirmed <- coronavirus %>%
+  dplyr::filter(type == "confirmed") %>%
+  dplyr::filter(date >= "2020-02-29") %>%
+  dplyr::mutate(country = country) %>%
+  dplyr::group_by(date, country) %>%
+  dplyr::summarise(total = sum(cases)) %>%
+  dplyr::ungroup() %>%
+  tidyr::pivot_wider(names_from = country, values_from = total)
+
+daily_confirmed %>%
+  plotly::plot_ly() %>%
+  plotly::add_trace(
+    x = ~date,
+    y = ~Poland,
+    type = "scatter",
+    mode = "lines+markers",
+    name = "Polska"
+  ) %>%
+    plotly::add_trace(
+    x = ~date,
+    y = ~Sweden,
+    type = "scatter",
+    mode = "lines+markers",
+    name = "Szwecja"
+  ) %>%
+    plotly::add_trace(
+    x = ~date,
+    y = ~Germany,
+    type = "scatter",
+    mode = "lines+markers",
+    name = "Niemcy"
+  ) %>%
+  plotly::add_trace(
+    x = ~date,
+    y = ~Italy,
+    type = "scatter",
+    mode = "lines+markers",
+    name = "Włochy"
+  ) %>%
+    plotly::add_trace(
+    x = ~date,
+    y = ~US,
+    type = "scatter",
+    mode = "lines+markers",
+    name = "Stany Zjednoczone"
+  ) %>%
+  plotly::layout(
+    title = "",
+    legend = list(x = 0.1, y = 0.9),
+    yaxis = list(title = "Ilość zarażonych"),
+    xaxis = list(title = "Data"),
+    hovermode = "compare",
+    margin = list(
+      b = 10,
+      t = 10,
+      pad = 2
+    )
+  )
+```
